@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HarbourPass | Mumbai Local</title>
+<style>
+:root{--navy:#0b1c38;--blue:#2563eb;--teal:#089caa;--bg:#eef3fa;--text:#1b2b46;--muted:#66788f;--line:#dce5f1}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,system-ui,sans-serif}
+header{background:linear-gradient(120deg,#0a1a37,#174e9b 68%,#079aa9);color:white;padding:20px 16px 36px}
+.head{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-size:24px;font-weight:900}.brand small{display:block;font-size:11px;letter-spacing:1px;font-weight:500}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.profile{background:#ffffff20;border:1px solid #ffffff66;color:white;border-radius:25px;padding:10px 14px}
+main{max-width:1050px;margin:-16px auto 30px;padding:0 14px}.screen{display:none}.screen.active{display:block}
+.card{background:white;border-radius:18px;padding:20px;box-shadow:0 7px 22px #163a6b12;margin-bottom:15px}
+.hero{background:linear-gradient(110deg,#fff,#e7f8fc)}h1{font-size:26px;margin:8px 0}h2{font-size:21px;margin:0}h3{margin-bottom:8px}
+.muted,.tiny{color:var(--muted);font-size:13px}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{background:white;border:1px solid var(--line);border-radius:17px;min-height:125px;padding:15px 8px;box-shadow:0 5px 14px #173c6c0b;color:var(--text)}
+.tile:hover{border-color:var(--blue);transform:translateY(-2px)}.tile span{display:block;font-size:28px;background:#eaf2ff;width:52px;height:52px;border-radius:15px;margin:0 auto 10px;padding-top:7px}
+.tile b,.tile small{display:block}.tile b{font-size:13px}.tile small{color:var(--muted);font-size:11px;margin-top:5px}
+.pagehead{display:flex;gap:12px;align-items:center;margin:4px 0 14px}.back{background:#dbeafe;color:#174c98;border:0;padding:10px 13px;border-radius:10px;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{margin-bottom:13px}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+input,select,textarea{background:white;border:1px solid #cbd8e8;border-radius:10px;padding:12px;width:100%;color:var(--text)}textarea{min-height:95px}
+.btn{border:0;background:linear-gradient(95deg,#1f65dc,#079eac);color:white;border-radius:11px;padding:12px 17px;font-weight:750}.btn.secondary{background:#e5f0ff;color:#1958a6}.btn.red{background:#fee2e2;color:#a32222}.wide{width:100%}
+.notice{background:#e4f8ec;color:#14683e;padding:13px;border-radius:12px;margin:12px 0}.warn{background:#fff5dd;color:#75521a}
+.hide{display:none!important}.summary{background:#eff7ff;border:1px solid #d6e7fb;border-radius:13px;padding:15px;margin:12px 0}
+.split{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #dbe7f4;padding:10px 0}.split:last-child{border:0}.price{font-size:27px;font-weight:900;color:#165dc0}
+.route-step{border-left:4px solid #2563eb;margin:12px 0;padding:9px 12px;background:#f4f8ff;border-radius:0 10px 10px 0}
+.route-step.c{border-color:#e65b4f}.route-step.w{border-color:#16a34a}.listcard{border:1px solid var(--line);border-radius:12px;padding:13px;margin:9px 0}
+.times{max-height:390px;overflow:auto}.time{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--line)}
+.stations{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.station{padding:9px;background:#f1f6fd;border-radius:8px;font-size:12px;border:0;text-align:left}
+.mapwrap{overflow:auto;border-radius:13px;background:#f9fcff;border:1px solid var(--line);padding:10px}.lineMap{min-width:700px;padding:15px}.mapstation{display:inline-block;background:#eaf2ff;border:1px solid #bfd4f7;border-radius:20px;padding:7px 10px;margin:5px;font-size:12px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;margin:10px 0}.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}.actions>*{flex:1}.foot{text-align:center;color:#64748b;font-size:12px;padding:18px}
+@media(max-width:650px){.tiles{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.stations{grid-template-columns:repeat(2,1fr)}.card{padding:15px}.brand{font-size:21px}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="brand">🚆 HarbourPass<small>MUMBAI LOCAL • ALL LINES</small></div><button class="profile" id="profile" onclick="go('login')">👤 Login</button></div></header>
+<main>
+<section id="home" class="screen active">
+ <div class="card hero"><div class="muted">YOUR MUMBAI LOCAL COMPANION</div><h1>Every line. One journey.</h1><p class="muted">Harbour • Central • Western • Route changes & station map</p><p id="welcome" style="color:#175ab5;font-weight:700"></p></div>
+ <div class="tiles">
+ <button class="tile" onclick="go('login')"><span>👤</span><b>User Login</b><small>Save profile</small></button>
+ <button class="tile" onclick="go('booking')"><span>🎟️</span><b>Book Ticket</b><small>Route & fares</small></button>
+ <button class="tile" onclick="go('planner')"><span>🔀</span><b>Route Planner</b><small>Via & change trains</small></button>
+ <button class="tile" onclick="go('timings')"><span>🕒</span><b>Train Timings</b><small>Sample time slots</small></button>
+ <button class="tile" onclick="go('map')"><span>🗺️</span><b>Railway Map</b><small>All 3 lines</small></button>
+ <button class="tile" onclick="go('stations')"><span>📍</span><b>All Stations</b><small>Branches & lines</small></button>
+ <button class="tile" onclick="go('trains')"><span>🚉</span><b>About Trains</b><small>Slow, Fast & AC</small></button>
+ <button class="tile" onclick="go('history')"><span>🧾</span><b>My Bookings</b><small>Saved journeys</small></button>
+ <button class="tile" onclick="go('feedback')"><span>⭐</span><b>Feedback</b><small>Rate your visit</small></button>
+ <button class="tile" onclick="go('help')"><span>❔</span><b>Help Centre</b><small>Instructions</small></button>
+ </div>
+</section>
+
+<section id="login" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>User Login</h2></div><div class="card">
+ <form id="loginform" onsubmit="login(event)"><div class="field"><label>Full Name</label><input id="name" required minlength="2" placeholder="Your full name"></div><div class="field"><label>Mobile Number</label><input id="mobile" required inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit number"></div><button class="btn wide">Login & Save</button></form>
+ <div id="logged" class="hide"><div class="notice">✔ Login successful. Profile saved on this device.</div><h3 id="loggedname"></h3><p id="loggedmobile" class="muted"></p><div class="actions"><button class="btn" onclick="go('booking')">Book Ticket</button><button class="btn red" onclick="logout()">Logout</button></div></div>
+ </div></section>
+
+<section id="booking" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>Book Ticket</h2></div>
+ <div id="gate" class="card hide"><div class="notice warn">Please login before saving a journey.</div><button class="btn" onclick="go('login')">Go to Login</button></div>
+ <div id="bookform" class="card"><div class="grid"><div class="field"><label>From Station</label><select id="from" onchange="updateBooking()"></select></div><div class="field"><label>To Station</label><select id="to" onchange="updateBooking()"></select></div></div>
+ <div class="grid"><div class="field"><label>Journey Type</label><select id="journey" onchange="updateBooking()"><option value="1">Single</option><option value="2">Return</option></select></div><div class="field"><label>Class</label><select id="cls" onchange="updateBooking()"><option value="second">Second Class</option><option value="first">First Class</option><option value="ac">AC Local</option></select></div></div>
+ <div class="grid"><div class="field"><label>Passengers (1–6)</label><input id="adults" type="number" min="1" max="6" value="1" oninput="updateBooking()"></div><div class="field"><label>Journey Date</label><input id="date" type="date"></div></div>
+ <div id="bookingRoute"></div><div id="fare" class="summary"></div><button class="btn wide" onclick="saveBooking()">Save Journey Summary</button><div id="bookingResult"></div></div>
+</section>
+
+<section id="planner" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>Route Planner</h2></div><div class="card"><div class="grid"><div class="field"><label>From</label><select id="planFrom" onchange="renderPlanner()"></select></div><div class="field"><label>To</label><select id="planTo" onchange="renderPlanner()"></select></div></div><div id="planResult"></div><button class="btn" onclick="usePlanner()">Continue to Booking →</button></div></section>
+
+<section id="timings" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>Train Timings</h2></div><div class="card"><div class="grid"><div class="field"><label>Line / Route</label><select id="timingRoute" onchange="renderTimes()"></select></div><div class="field"><label>Train Type</label><select id="trainType" onchange="renderTimes()"><option value="all">All Types</option><option value="slow">Slow</option><option value="fast">Fast</option><option value="ac">AC Local</option></select></div></div><div class="grid"><div class="field"><label>From Time</label><input type="time" id="startTime" value="06:00" onchange="renderTimes()"></div><div class="field"><label>Show slots</label><select id="timeCount" onchange="renderTimes()"><option value="20">Next 20 slots</option><option value="50">Next 50 slots</option><option value="all">All slots</option></select></div></div><div class="notice warn">Demo timetable only: generated time slots are not real departures. Verify with official railway information before travelling.</div><div id="timeList" class="times"></div></div></section>
+
+<section id="map" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>Railway Network Map</h2></div><div class="card"><p class="muted">Tap any station to set it as the starting station for your booking.</p><div class="legend"><span><i class="dot" style="background:#2563eb"></i>Harbour</span><span><i class="dot" style="background:#e65b4f"></i>Central</span><span><i class="dot" style="background:#16a34a"></i>Western</span></div><div id="mapContent" class="mapwrap"></div><p class="tiny">Simplified schematic, not a geographically accurate map.</p></div></section>
+
+<section id="stations" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>All Stations</h2></div><div class="card"><div class="field"><label>Railway Line / Branch</label><select id="stationLine" onchange="renderStations()"></select></div><div class="field"><label>Search station</label><input id="stationSearch" placeholder="Type station name..." oninput="renderStations()"></div><div id="stationGroups"></div></div></section>
+
+<section id="trains" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>About Trains</h2></div><div class="card"><div class="listcard"><b>🔵 Harbour Line</b><p class="muted">CSMT–Panvel corridor and Wadala Road branches.</p></div><div class="listcard"><b>🔴 Central Line</b><p class="muted">CSMT–Kalyan with Kasara and Khopoli branches.</p></div><div class="listcard"><b>🟢 Western Line</b><p class="muted">Churchgate–Virar–Dahanu Road corridor.</p></div><div class="listcard"><b>🚆 Slow Local</b><p class="muted">Usually stops at all stations on its assigned route.</p></div><div class="listcard"><b>⚡ Fast Local</b><p class="muted">Skips selected stations; stops depend on the service.</p></div><div class="listcard"><b>❄️ AC Local</b><p class="muted">Air-conditioned service on designated routes and timings.</p></div></div></section>
+
+<section id="history" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>My Bookings</h2></div><div class="card" id="historyList"></div></section>
+<section id="feedback" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>Feedback</h2></div><div class="card"><form onsubmit="feedback(event)"><div class="field"><label>Name</label><input id="feedbackName" required></div><div class="field"><label>Rating</label><select id="rating"><option value="5">★★★★★ Excellent</option><option value="4">★★★★ Good</option><option value="3">★★★ Average</option><option value="2">★★ Needs Improvement</option><option value="1">★ Poor</option></select></div><div class="field"><label>Message</label><textarea id="message" required maxlength="600" placeholder="Tell us what you think"></textarea></div><button class="btn wide">Submit Feedback</button></form><div id="feedbackNotice"></div><div id="feedbackList"></div></div></section>
+<section id="help" class="screen"><div class="pagehead"><button class="back" onclick="go('home')">← Back</button><h2>Help Centre</h2></div><div class="card"><p><b>1.</b> Login using your name and 10-digit mobile number.</p><p><b>2.</b> Use Route Planner to see a suggested route and possible changes.</p><p><b>3.</b> In Book Ticket, choose stations, class, date and passengers, then save the summary.</p><p><b>4.</b> Open My Bookings to see journeys saved on this browser.</p><p><b>5.</b> Search station names in All Stations or tap a station in the Railway Map.</p><div class="notice warn">This is a student/demo website. It does not process payments or issue official railway tickets. Fares and timetable slots are illustrative.</div></div></section>
+</main><div class="foot">HarbourPass • Mumbai Local Journey Planner</div>
+<script>
+const routes={
+'H • CSMT–Panvel':['CSMT','Masjid','Sandhurst Road','Dockyard Road','Reay Road','Cotton Green','Sewri','Wadala Road','GTB Nagar','Chunabhatti','Kurla','Tilak Nagar','Chembur','Govandi','Mankhurd','Vashi','Sanpada','Juinagar','Nerul','Seawoods Darave','CBD Belapur','Kharghar','Mansarovar','Khandeshwar','Panvel'],
+'H • Wadala–Goregaon':['Wadala Road','Kings Circle','Mahim Junction','Bandra','Khar Road','Santacruz','Vile Parle','Andheri','Jogeshwari','Ram Mandir','Goregaon'],
+'C • CSMT–Kalyan':['CSMT','Masjid','Sandhurst Road','Byculla','Chinchpokli','Currey Road','Parel','Dadar','Matunga','Sion','Kurla','Vidyavihar','Ghatkopar','Vikhroli','Kanjurmarg','Bhandup','Nahur','Mulund','Thane','Kalwa','Mumbra','Diva Junction','Kopar','Dombivli','Thakurli','Kalyan'],
+'C • Kalyan–Kasara':['Kalyan','Shahad','Ambivli','Titwala','Khadavli','Vasind','Asangaon','Atgaon','Thansit','Khardi','Umbermali','Kasara'],
+'C • Kalyan–Khopoli':['Kalyan','Vithalwadi','Ulhasnagar','Ambernath','Badlapur','Vangani','Shelu','Neral','Bhivpuri Road','Karjat','Palasdhari','Kelavli','Dolavli','Lowjee','Khopoli'],
+'W • Churchgate–Dahanu Road':['Churchgate','Marine Lines','Charni Road','Grant Road','Mumbai Central','Mahalaxmi','Lower Parel','Prabhadevi','Dadar','Matunga Road','Mahim Junction','Bandra','Khar Road','Santacruz','Vile Parle','Andheri','Jogeshwari','Ram Mandir','Goregaon','Malad','Kandivali','Borivali','Dahisar','Mira Road','Bhayandar','Naigaon','Vasai Road','Nalasopara','Virar','Vaitarna','Saphale','Kelve Road','Palghar','Umroli','Boisar','Vangaon','Dahanu Road']};
+const allStations=[...new Set(Object.values(routes).flat())].sort((a,b)=>a.localeCompare(b));
+const $=id=>document.getElementById(id);
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem('hp3_'+k))??d}catch(e){return d}};
+const write=(k,v)=>localStorage.setItem('hp3_'+k,JSON.stringify(v));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let user=read('user',null);
+const graph=new Map();
+function edge(a,b,line){if(!graph.has(a))graph.set(a,[]);if(!graph.has(b))graph.set(b,[]);graph.get(a).push({to:b,line});graph.get(b).push({to:a,line})}
+for(const [name,st] of Object.entries(routes)){for(let i=1;i<st.length;i++)edge(st[i-1],st[i],name[0])}
+function findRoute(from,to){
+ if(from===to)return null;
+ const q=[{at:from,line:null,cost:0,stops:0,changes:0,path:[]}],best=new Map();
+ while(q.length){q.sort((a,b)=>a.cost-b.cost);const cur=q.shift(),key=cur.at+'|'+cur.line;if(best.has(key)&&best.get(key)<=cur.cost)continue;best.set(key,cur.cost);
+ if(cur.at===to){const segments=[];for(const hop of cur.path){const last=segments.at(-1);if(last&&last.line===hop.line&&last.to===hop.from){last.to=hop.to;last.stops++}else segments.push({line:hop.line,from:hop.from,to:hop.to,stops:1})}return {...cur,segments}}
+ for(const n of graph.get(cur.at)||[]){const changed=cur.line!==null&&cur.line!==n.line,cost=cur.cost+1+(changed?9:0);if(cost<(best.get(n.to+'|'+n.line)??Infinity))q.push({at:n.to,line:n.line,cost,stops:cur.stops+1,changes:cur.changes+Number(changed),path:[...cur.path,{from:cur.at,to:n.to,line:n.line}]})}
+ }return null
+}
+function routeHTML(r){if(!r)return '<div class="notice warn">Choose two different connected stations.</div>';const labels={H:'Harbour',C:'Central',W:'Western'};return `<div class="summary"><b>Suggested journey • ${r.stops} stops • ${r.changes} train change(s)</b>${r.segments.map((s,i)=>`<div class="route-step ${s.line.toLowerCase()}"><b>${i+1}. ${labels[s.line]} Line</b><div>${esc(s.from)} → ${esc(s.to)}</div><span class="muted">${s.stops} stop(s)</span></div>${i<r.segments.length-1?`<p><b>🔀 Change trains at ${esc(s.to)}</b></p>`:''}`).join('')}<p class="tiny">Suggested route only. Check actual services before travelling.</p></div>`}
+function go(page){
+ document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('active',el.id===page));
+ window.scrollTo({top:0,behavior:'smooth'});$('profile').textContent=user?'👤 '+user.name.split(' ')[0]:'👤 Login';
+ $('welcome').textContent=user?'Welcome, '+user.name+'!':'Log in to save your journeys.';
+ if(page==='login')renderLogin();if(page==='booking')renderBooking();if(page==='planner')renderPlanner();if(page==='timings')renderTimes();if(page==='map')renderMap();if(page==='stations')renderStations();if(page==='history')renderHistory();if(page==='feedback')renderFeedback()
+}
+function renderLogin(){$('loginform').classList.toggle('hide',!!user);$('logged').classList.toggle('hide',!user);if(user){$('loggedname').textContent=user.name;$('loggedmobile').textContent='Mobile: '+user.mobile}}
+function login(e){e.preventDefault();const name=$('name').value.trim(),mobile=$('mobile').value.trim();if(name.length<2||!/^[0-9]{10}$/.test(mobile)){alert('Enter a valid name and 10-digit number');return}user={name,mobile};write('user',user);renderLogin();$('profile').textContent='👤 '+name.split(' ')[0];$('welcome').textContent='Welcome, '+name+'!'}
+function logout(){user=null;localStorage.removeItem('hp3_user');renderLogin();$('profile').textContent='👤 Login';go('home')}
+function fillSelect(id,selected){$(id).innerHTML=allStations.map(s=>`<option ${s===selected?'selected':''} value="${esc(s)}">${esc(s)}</option>`).join('')}
+function fillRoutes(id){$(id).innerHTML=Object.keys(routes).map(r=>`<option value="${esc(r)}">${esc(r)}</option>`).join('')}
+function renderBooking(){
+ $('gate').classList.toggle('hide',!!user);$('bookform').classList.toggle('hide',!user);
+ if(!user)return;
+ if(!$('from').options.length){fillSelect('from','CSMT');fillSelect('to','Panvel');$('date').value=new Date().toISOString().slice(0,10)}
+ updateBooking()
+}
+function updateBooking(){
+ if(!$('from').options.length)return;
+ const r=findRoute($('from').value,$('to').value);$('bookingRoute').innerHTML=routeHTML(r);
+ const n=Math.max(1,Math.min(6,Number($('adults').value)||1)),journey=Number($('journey').value),cls=$('cls').value;
+ const base=r?Math.max(5,Math.ceil(r.stops/5)*5):0,mult=cls==='second'?1:cls==='first'?3:6;
+ const total=base*mult*n*journey;
+ $('fare').innerHTML=`<div class="muted">Estimated fare (demo only)</div><div class="price">₹${total}</div><div>${n} passenger(s) • ${journey===1?'Single':'Return'} • ${esc($('cls').selectedOptions[0].text)}</div><p class="tiny">Illustrative calculation, not an official railway fare.</p>`
+}
+function saveBooking(){
+ if(!user){go('login');return}const r=findRoute($('from').value,$('to').value);if(!r){alert('Please choose two different connected stations.');return}
+ const b={id:Date.now(),from:$('from').value,to:$('to').value,date:$('date').value||'Not selected',journey:$('journey').selectedOptions[0].text,cls:$('cls').selectedOptions[0].text,passengers:Number($('adults').value)||1,fare:$('fare').querySelector('.price').textContent,stops:r.stops};
+ const list=read('bookings',[]);list.unshift(b);write('bookings',list);$('bookingResult').innerHTML='<div class="notice">Journey summary saved! Open My Bookings to view it.</div>'
+}
+function renderPlanner(){if(!$('planFrom').options.length){fillSelect('planFrom','CSMT');fillSelect('planTo','Panvel')}$('planResult').innerHTML=routeHTML(findRoute($('planFrom').value,$('planTo').value))}
+function usePlanner(){if(!$('planFrom').options.length)return;$('from').value=$('planFrom').value;$('to').value=$('planTo').value;go('booking')}
+function renderTimes(){
+ if(!$('timingRoute').options.length)fillRoutes('timingRoute');
+ const route=$('timingRoute').value,type=$('trainType').value,count=$('timeCount').value,start=$('startTime').value||'06:00';let [h,m]=start.split(':').map(Number),total=h*60+m;
+ const max=count==='all'?240:Number(count),items=[];
+ for(let i=0;i<max&&total<24*60;i++,total+=4){let hh=String(Math.floor(total/60)).padStart(2,'0'),mm=String(total%60).padStart(2,'0');let kind=['slow','fast','ac'][i%3];if(type!=='all'&&type!==kind)continue;items.push(`<div class="time"><span>🚆 ${esc(route)}</span><b>${hh}:${mm}</b><span class="pill">${kind.toUpperCase()}</span></div>`)}
+ $('timeList').innerHTML=items.length?items.join(''):'<p>No sample slots found for this time. Try an earlier time.'
+}
+function renderStations(){
+ if(!$('stationLine').options.length)$('stationLine').innerHTML=Object.keys(routes).map(r=>`<option value="${esc(r)}">${esc(r)}</option>`).join('');
+ const line=$('stationLine').value,query=($('stationSearch').value||'').toLowerCase(),st=(routes[line]||[]).filter(s=>s.toLowerCase().includes(query));
+ $('stationGroups').innerHTML=`<p class="muted">${st.length} station(s) • Click a station to use it in Book Ticket.</p><div class="stations">${st.map(s=>`<button class="station" onclick="chooseStation('${esc(s)}')">📍 ${esc(s)}</button>`).join('')}</div>`
+}
+function chooseStation(s){go('booking');if(!$('from').options.length)return;$('from').value=s;updateBooking()}
+function renderMap(){
+ const colors={H:'#2563eb',C:'#e65b4f',W:'#16a34a'};
+ $('mapContent').innerHTML=Object.entries(routes).map(([r,st])=>`<div class="lineMap"><b style="color:${colors[r[0]]}">${esc(r)}</b><div>${st.map(s=>`<button class="mapstation" onclick="chooseStation('${esc(s)}')">${esc(s)}</button>`).join('')}</div></div><hr style="border:0;border-top:1px solid #dce5f1">`).join('')
+}
+function renderHistory(){const list=read('bookings',[]);$('historyList').innerHTML=list.length?list.map(b=>`<div class="listcard"><b>🚆 ${esc(b.from)} → ${esc(b.to)}</b><div class="split"><span>Date</span><b>${esc(b.date)}</b></div><div class="split"><span>Class / Journey</span><b>${esc(b.cls)} / ${esc(b.journey)}</b></div><div class="split"><span>Passengers</span><b>${b.passengers}</b></div><div class="split"><span>Estimated fare</span><b>${esc(b.fare)}</b></div><button class="btn red" onclick="deleteBooking(${b.id})">Delete summary</button></div>`).join(''):'<p class="muted">No saved journeys yet. Go to Book Ticket to save one.</p>'}
+function deleteBooking(id){write('bookings',read('bookings',[]).filter(b=>b.id!==id));renderHistory()}
+function feedback(e){e.preventDefault();const items=read('feedback',[]);items.unshift({name:$('feedbackName').value.trim(),rating:$('rating').value,message:$('message').value.trim(),date:new Date().toLocaleDateString()});write('feedback',items);$('feedbackNotice').innerHTML='<div class="notice">Thanks! Your feedback has been saved on this device.</div>';$('message').value='';renderFeedback()}
+function renderFeedback(){if(!$('feedbackList'))return;const items=read('feedback',[]);$('feedbackList').innerHTML=items.length?'<h3>Saved feedback</h3>'+items.map(f=>`<div class="listcard"><b>${esc(f.name)} • ${'★'.repeat(Number(f.rating))}</b><p>${esc(f.message)}</p><span class="tiny">${esc(f.date)}</span></div>`).join(''):''}
+fillSelect('from','CSMT');fillSelect('to','Panvel');fillSelect('planFrom','CSMT');fillSelect('planTo','Panvel');fillRoutes('timingRoute');
+$('date').value=new Date().toISOString().slice(0,10);
+go('home');renderLogin();
+</script>
+</body>
+</html>
